@@ -14,20 +14,36 @@ const API_OPTIONS ={ methode: 'GET',headers: {
 
 const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [errorMassage, setErrorMessage] =useState('');
+  const [movieList, setMovielist] =useState([]);
+  const [isloading, setIsLoading] = useState(true)
 
-
-const [errorMassage, setErrorMessage] =useState('');
     const fetchMovies = async () => { 
-      try{
-        const endpoint=`${API_BASE_URL}/discover/movie?sort_by=popularity.desc`
+      setIsLoading(true);
+      setErrorMessage('')
+      try{  
+        const endpoint=`${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
 
           const response =await fetch(endpoint,API_OPTIONS);
+          if(!response.ok){
             throw new Error('Failed to fetch movies');
+          }
+            const data = await response.json();
+            console.log(data);
+            if(data.Response = 'false'){
+              setErrorMessage(data.error|| 'Faild to fetch movies');
+              setMovieList([]);
+              return;
+            }
+            setMovielist(data.results);
         }catch(error){
-      console.error(`Error fetching movies: ${error}`)
+      console.error(`Error fetching movies: ${error}`);
+      setErrorMessage('Error fetching movies. please try again later.');
 
     }
-
+      finally{
+        setIsLoading(true);
+      }
     }
 }
   useEffect( () =>{
@@ -47,15 +63,36 @@ const [errorMassage, setErrorMessage] =useState('');
 
         </header>
     <section className="all-movies">
-<h2>
+<h2 className="mt-[20px]">
     ALL Movies
 </h2>
-{errorMassage && <p className="text-red-500">{errorMessage}</p>}
 
+{isloading?(<p className="text-white">
+  Loading....
+</p>)
+      : errorMassage ? (<p className='text-white'> 
+      {errorMassage}
+
+      </p>) : (
+
+        <ul>
+
+
+          {movieList.map}((movie) ==> (
+<p key={movieid} className='text white' > {movie.title}  
+  
+</p>
+            
+          ))}
+
+        </ul>
+      )
+
+}
     </section>
       </div>
     </main>
-  );
+  )
 
 }
 export default App;
