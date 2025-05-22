@@ -2,6 +2,7 @@ import './components/search.jsx';
 import './App.css';
 import { useEffect, useState } from 'react';
 import Search from './components/search.jsx';
+import MovieCard from './components/MovieCard.jsx';
 // eslint-disable-next-line no-unused-vars
 const API_BASE_URL=`https://api.themoviedb.org/3`;
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -79,16 +80,13 @@ const App = () => {
 
 
           {movieList.map}((movie) ==> (
-<p key={movieid} className='text white' > {movie.title}  
-  
-</p>
+<MovieCard  key={movie.id} movie={movie}/>  
             
           ))}
 
         </ul>
       )
-
-}
+    
     </section>
       </div>
     </main>
