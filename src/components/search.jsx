@@ -5,11 +5,11 @@ const Search = ({ searchTerm, setSearchTerm }) => {
     <div className="search">
     <div>
           <img src="search.svg" alt="search" />
-          <input type="text" placeholder="Serch throu thousend of movies"
+          <input type="text" placeholder="Search thousands of movies"
           value={searchTerm}
           onChange={(Event)=> setSearchTerm(Event.target.value)} />
     </div>
-    </div>
+    </div> 
   );
 };
 
